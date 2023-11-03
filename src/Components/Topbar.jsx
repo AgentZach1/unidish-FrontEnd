@@ -42,6 +42,13 @@ const Topbar = () => {
       </div>
       <div className="topbar-buttons">
         <Button
+        className="topbar-button"
+        variant="contained"
+        onClick={handleHome}
+        >
+          Home
+        </Button>
+        <Button
           className="topbar-button"
           variant="contained"
             onClick={handleProfile}

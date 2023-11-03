@@ -104,10 +104,14 @@ export const getMenuItemsForRestaurant = async (restId) => {
   }
 };
 
-export const changePassword = async (newOldPass) => {
+export const changePassword = async ({ token, oldPassword, newPassword }) => {
   try {
-    const response = await axios.post("https://connect.weiss.land/api/unidish/changePassword", newOldPass);
-    console.log(newOldPass);
+      const response = await axios.post("https://connect.weiss.land/api/unidish/changePassword", {
+          token,
+          oldPassword,
+          newPassword
+      });
+    console.log(newPassword);
     console.log(response.data);
     return response.data;
   } catch (error) {
@@ -117,12 +121,21 @@ export const changePassword = async (newOldPass) => {
 };
 
 export const deleteAccount = async (token) => {
-  const headers = {
-    Authorization: `${token}`,
-  };
   try {
-    const response = await axios.post("https://connect.weiss.land/api/unidish/deleteAccount", {headers});
+    const response = await axios.post("https://connect.weiss.land/api/unidish/deleteAccount", {token});
     console.log(token);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    alert(error.response.data.error);
+    return error;
+  }
+};
+
+export const editProfile = async (token, username, firstname, lastname, profile_description, type) => {
+  try {
+    const response = await axios.post("https://connect.weiss.land/api/unidish/editProfile", {token, username, firstname, lastname, profile_description, type});
+    console.log(token, username, firstname, lastname, profile_description, type);
     console.log(response.data);
     return response.data;
   } catch (error) {

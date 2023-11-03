@@ -38,9 +38,9 @@ const Sidebar = () => {
               <div key={diningHall.id}>
                 <h3>{diningHall.dining_hall[1]}</h3>
                 <ul>
-                  {diningHall.restaurants.map((restaurant) => (
+                  {diningHall.restaurants.map((restaurant, i) => (
                     <li
-                      key={restaurant.id}
+                      key={i}
                       onClick={() => handleRestaurantClick(restaurant)}
                       style={{ cursor: "pointer" }}
                     >
