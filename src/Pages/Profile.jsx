@@ -188,16 +188,27 @@ const Profile = () => {
     
     return (
     <div className="profile-container">
-        <p>Profile</p>
-        {/* <Button
-        onClick={handleDisplay}>
-            Click me!
-        </Button> */}
-            <Button
+        <p className="profile-header">Profile</p>
+        {currUser && (
+            <div className="profile-header">
+                {currUser.user.username}
+                <ul>
+                    Hello, {currUser ? currUser.user.firstname + " " + currUser.user.lastname: ":P"}!
+                </ul>
+                <ul>
+                    {currUser.user.type}
+                </ul>
+                <ul>
+                    {currUser.user.profile_description}
+                </ul>
+                
+            </div>
+        )}
+            {!isEditingProfile && (<Button
                 onClick={handleEditProfileClick}
             >
                 Edit Profile
-            </Button>
+            </Button>)}
             {isEditingProfile && (<Button
                 onClick={handleNoEditProfileClick}
             >
@@ -306,21 +317,7 @@ const Profile = () => {
             </div>
             </>
             )}
-        {currUser && (
-            <div className="profile-header">
-                {currUser.user.username}
-                <ul>
-                    Hello, {currUser ? currUser.user.firstname + " " + currUser.user.lastname: ":P"}!
-                </ul>
-                <ul>
-                    {currUser.user.type}
-                </ul>
-                <ul>
-                    {currUser.user.profile_description}
-                </ul>
-                
-            </div>
-        )}
+        
         {/* Display 
         Values from DBMS
         Button to change password

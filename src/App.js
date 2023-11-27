@@ -9,6 +9,7 @@ import DiningHall from "./Pages/DiningHall";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SignUp from "./Pages/Signup";
 import Login from "./Pages/Login";
+import ExternUser from "./Pages/ExternUser";
 import { useSelector } from "react-redux";
 import Restaurant from "./Pages/Restaurant";
 import Profile from "./Pages/Profile";
@@ -31,6 +32,10 @@ function App() {
                 element={<Restaurant />}
               />
               <Route path="/unidish-test/Profile" element={<Profile />} />
+              <Route 
+                path="/unidish-test/user/:userId" 
+                element={<ExternUser />} 
+              />
               {/* <Route path="/" element={<DiningHall />} /> */}
             </Routes>
           </div>

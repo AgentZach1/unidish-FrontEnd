@@ -1,5 +1,6 @@
 import axios from "axios";
 import { setAuthToken } from "./setAuthToken";
+import e from "cors";
 
 export const checkDBConnection = async () => {
   try {
@@ -52,6 +53,34 @@ export const addUser = async (userData) => {
   }
 };
 
+export const getBaseCommentsByReview = async (reviewID) => {
+  try {
+    const response = await axios.get("https://connect.weiss.land/api/unidish/getBaseCommentsFromReview", {
+      params: {reviewID}
+    });
+    // console.log(response.data);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    alert(err.response.data.message);
+    return err;
+  }
+};
+
+export const getCommentsFromComment = async (commCommentID) => {
+  try {
+    const response = await axios.get("https://connect.weiss.land/api/unidish/getCommentsFromComment", {
+      params: {commCommentID}
+    });
+    // console.log(response.data);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    alert(err.response.data.message);
+    return err;
+  }
+}
+
 export const getUserByToken = async (token) => {
   const headers = {
     Authorization: `${token}`,
@@ -78,6 +107,18 @@ export const getDiningHallsWithRestaurants = async () => {
   }
 };
 
+export const getDiningHallsWithRestaurantsAndReviews = async () => {
+  try {
+    const response = await axios.get("https://connect.weiss.land/api/unidish/getDiningHallsWithRestaurantsAndReviews");
+    // console.log(response.data);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    alert(err.response.data.message);
+    return err;
+  }
+};
+
 export const getRestaurantById = async (restId) => {
   try {
     const response = await axios.get("https://connect.weiss.land/api/unidish/getRestaurantById", {
@@ -87,6 +128,38 @@ export const getRestaurantById = async (restId) => {
   } catch (err) {
     console.log(err);
     alert(err.response.data.message);
+    return err;
+  }
+};
+
+export const getDiningHallsWithRestsReviewsLikesDislikes = async () => {
+  try {
+    const response = await axios.get('/api/unidish/getDiningHallsWithRestaurantsAndReviews');
+    const halls = response.data.dining_halls;
+    for (const hall of halls) {
+        for (const restaurant of hall.restaurants) {
+            for (const review of restaurant.reviews) {
+                const likesDislikesResponse = await axios.get(`/api/unidish/reviewLikesDislikesCount?reviewId=${review.Review_ID}`);
+                review.likes = likesDislikesResponse.data.likes;
+                review.dislikes = likesDislikesResponse.data.dislikes;
+            }
+        }
+    }
+    return halls;
+  } catch (err) {
+    console.log(err);
+    alert(err);
+    return err;
+  }
+};
+
+export const getReviewsFromRestaurant = async (restId) => {
+  try {
+    const response = await axios.get(`/api/unidish/getReviewsFromRestaurant`, { params: { restId } });
+    return response.data;
+  } catch (err) {
+    console.log(err);
+    alert(err);
     return err;
   }
 };

@@ -3,22 +3,28 @@ import { useParams } from "react-router-dom";
 import {
   getMenuItemsForRestaurant,
   getRestaurantById,
+  getReviewsFromRestaurant,
 } from "../Axios/APICalls";
+import ReviewList from "../Components/ReviewList";
 
 const Restaurant = () => {
   const { restaurantId } = useParams();
   const [restaurant, setRestaurant] = useState();
   const [menuItems, setMenuItems] = useState();
+  const [reviewData, setReviewData] = useState();
 
   useEffect(() => {
     const fetchRestaurant = async () => {
       try {
         const rest = await getRestaurantById(restaurantId);
         const menu = await getMenuItemsForRestaurant(restaurantId);
+        const reviews = await getReviewsFromRestaurant(restaurantId);
         console.log(menu);
         console.log(rest);
+        console.log(reviews);
         setRestaurant(rest);
         setMenuItems(menu);
+        setReviewData(reviews);
       } catch (error) {
         console.error("Failed to fetch restaurant:", error);
       }
@@ -28,7 +34,7 @@ const Restaurant = () => {
   }, [restaurantId]); // Adding restaurantId as a dependency
   return (
     <div>
-      {restaurant && menuItems && (
+      {restaurant && menuItems && reviewData && (
         <>
           <div>
             {restaurant.restaurant.Name}
@@ -55,7 +61,23 @@ const Restaurant = () => {
               </li>
             </div>
           ))}
-        </ul>
+          </ul>
+          <div className="review-list-page">
+              <ReviewList
+                  restaurantName={restaurant.restaurant.Name}
+                  restaurantID={restaurant.restaurant.Restaurant_ID}
+                  reviewData={reviewData.reviews.map(review => ({
+                    userID: review.User_ID,
+                    date: review.Date,
+                    desc: review.Description,
+                    rating: review.Rating,
+                    likes: review.likes,
+                    dislikes: review.dislikes,
+                    commentList: [],
+                    reviewID: review.Review_ID
+                  }))}
+              />
+          </div>
         </>
         
       )}

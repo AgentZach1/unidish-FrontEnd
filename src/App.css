@@ -168,3 +168,20 @@
   display: flex;
   justify-content: space-between;
 }
+
+.review-list {
+  height: 70vh;
+  overflow-y: scroll;
+  background-color: antiquewhite;
+}
+
+.review-list-page {
+  background-color: antiquewhite;
+  height: 30vh;
+  overflow-y: scroll;
+  width: 50vw;
+}
+
+.review {
+  background-color: bisque;
+}

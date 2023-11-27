@@ -33,10 +33,10 @@ const Sidebar = () => {
       <div className="sidebar-content">
         {data.length > 0 &&
           data.map((diningHall) => {
-            // console.log(diningHall.dining_hall[1]);
+            // console.log(diningHall);
             return (
               <div key={diningHall.id}>
-                <h3>{diningHall.dining_hall[1]}</h3>
+                <h3>{diningHall.dining_hall.Name}</h3>
                 <ul>
                   {diningHall.restaurants.map((restaurant, i) => (
                     <li
